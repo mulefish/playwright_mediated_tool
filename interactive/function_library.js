@@ -4,7 +4,6 @@ function randomFromArray(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-    String.fromCharCode(97 + Math.floor(Math.random() * 26))
 const firstNamesArray = [
   "Able",
   "Barbara",

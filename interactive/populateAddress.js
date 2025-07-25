@@ -25,6 +25,14 @@ async function populateAddress(page, log) {
     const stateSelector = 'div[data-test-id="web-address-entry-state-q-select"] input.q-select__focus-target';
     await qSelect(page, "Alabama", "State", log, stateSelector);
 
+
+    const zipInput = await page.$('input[data-test-id="web-address-entry-zip-q-input"]');
+    if (zipInput) {
+      await zipInput.fill('61801');
+    } else {
+      await log('ZIP code input not found');
+    }
+
     const nextButton = await page.$("#navigationbuttons-rightbutton-q-btn");
     if (nextButton) {
       await nextButton.click();

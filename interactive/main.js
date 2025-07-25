@@ -1,6 +1,7 @@
 const { chromium } = require("playwright");
-const { populateSignup } = require("./populateSignup");
+const { populateSignup } = require("./populateSignupOrSignIn");
 const { populateLocation } = require("./populateLocation");
+const { populateLegalName } = require("./populateLegalName"); // ✅ new import
 
 (async () => {
   const browser = await chromium.launch({
@@ -16,16 +17,16 @@ const { populateLocation } = require("./populateLocation");
   await page.goto("http://localhost:4200/app/");
   await page.waitForLoadState("networkidle");
 
-  // FOr the humans! Inject UI panel with buttons and log area
+  // Inject UI panel with buttons and log area
   await page.evaluate(() => {
     const panel = document.createElement("div");
     panel.innerHTML = `
       <button id="run-000">Phone: 0000000000</button><br/>
       <button id="run-111">Phone: 1111111111</button><br/>
       <button id="run-location">Pick First Location</button><br/>
+      <button id="run-legalname">Next from Legal Name</button><br/>
       <hr/>
       <button id="clear-log">Clear Log</button><hr/>
-      <hr/>
       <textarea id="logArea" rows="10" style="width:100%;"></textarea>
     `;
     Object.assign(panel.style, {
@@ -77,8 +78,7 @@ const { populateLocation } = require("./populateLocation");
     }
   });
 
-  // THe following is wierd: But this whole thing is weird so...
-  // EXpose population functions to the browser context
+  // Expose population functions to the browser context
   await page.exposeFunction("runPopulate000", async () => {
     await populateSignup(page, log, "0000000000");
   });
@@ -89,6 +89,10 @@ const { populateLocation } = require("./populateLocation");
 
   await page.exposeFunction("runPopulateLocation", async () => {
     await populateLocation(page, log);
+  });
+
+  await page.exposeFunction("runPopulateLegalName", async () => {
+    await populateLegalName(page, log);
   });
 
   // Hook browser-side buttons to exposed functions
@@ -103,6 +107,10 @@ const { populateLocation } = require("./populateLocation");
 
     document.getElementById("run-location")?.addEventListener("click", () => {
       window.runPopulateLocation();
+    });
+
+    document.getElementById("run-legalname")?.addEventListener("click", () => {
+      window.runPopulateLegalName();
     });
 
     document.getElementById("clear-log")?.addEventListener("click", () => {

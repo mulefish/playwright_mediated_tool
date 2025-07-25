@@ -65,6 +65,7 @@ async function qSelect(page, value, label, log, selector = null) {
 }
 // WHy so defensive? Defeat Quasar.
 async function qCheckCheckbox(page, log, selector) {
+  log("this is qCheckCheckbox")
   const cb = await page.$(selector);
   if (!cb) {
     await log(`qCheckCheckbox: Not found → ${selector}`);
@@ -73,9 +74,12 @@ async function qCheckCheckbox(page, log, selector) {
   const wrapper = await cb.evaluateHandle((el) => el.closest(".q-checkbox"));
   const classList = await wrapper.evaluate((el) => [...el.classList]);
   if (!classList.includes("q-checkbox--truthy")) {
+    log('qCheckCheckbox checked')
     // More quasar madness: Quasar adds the class q-checkbox--truthy" if it already clicked 
     await cb.click();
-  } // SIlly! It is already clicked!
+  } else { 
+    log('qCheckCheckbox already checked')
+  }
 }
 
 module.exports = {

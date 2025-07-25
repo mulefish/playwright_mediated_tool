@@ -5,6 +5,8 @@ const { populateLegalName } = require("./populateLegalName");
 const { populateBirthAndCitizenship } = require("./populateBirthAndCitizenship");
 const { populateEligibility } = require("./populateEligibility");
 const { populateAttributes } = require("./populateAttributes");
+const { populateAddress } = require("./populateAddress");
+
 
 (async () => {
   const browser = await chromium.launch({
@@ -29,6 +31,7 @@ const { populateAttributes } = require("./populateAttributes");
       <button id="run-birthcitizen">Birth & Citizenship</button><br/>
       <button id="run-eligibility">Eligibility</button><br/>
       <button id="run-attributes">Attributes</button><br/>
+      <button id="run-address">Address</button><br/>
       <hr/>
       <button id="clear-log">Clear Log</button><hr/>
       <textarea id="logArea" rows="10" style="width:100%;"></textarea>
@@ -89,7 +92,9 @@ const { populateAttributes } = require("./populateAttributes");
   await page.exposeFunction("runPopulateBirthAndCitizenship", () => populateBirthAndCitizenship(page, log));
   await page.exposeFunction("runPopulateEligibility", () => populateEligibility(page, log));
   await page.exposeFunction("runPopulateAttributes", () => populateAttributes(page, log));
+  await page.exposeFunction("runPopulateAddress", () => populateAddress(page, log));
 
+  //
   // Bind buttons to exposed functions
   await page.evaluate(() => {
     const bind = (id, fn) => {
@@ -103,6 +108,7 @@ const { populateAttributes } = require("./populateAttributes");
     bind("run-birthcitizen", () => window.runPopulateBirthAndCitizenship());
     bind("run-eligibility", () => window.runPopulateEligibility());
     bind("run-attributes", () => window.runPopulateAttributes());
+    bind("run-address", () => window.runPopulateAddress());
     bind("clear-log", () => {
       const logArea = document.getElementById("logArea");
       if (logArea) logArea.value = "";

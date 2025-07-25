@@ -1,7 +1,11 @@
 const { chromium } = require("playwright");
 const { populateSignup } = require("./populateSignupOrSignIn");
 const { populateLocation } = require("./populateLocation");
-const { populateLegalName } = require("./populateLegalName"); // ✅ new import
+const { populateLegalName } = require("./populateLegalName");
+const {
+  populateBirthAndCitizenship,
+} = require("./populateBirthAndCitizenship");
+const { populateEligibility } = require("./populateEligibility");
 
 (async () => {
   const browser = await chromium.launch({
@@ -25,6 +29,9 @@ const { populateLegalName } = require("./populateLegalName"); // ✅ new import
       <button id="run-111">Phone: 1111111111</button><br/>
       <button id="run-location">Pick First Location</button><br/>
       <button id="run-legalname">Next from Legal Name</button><br/>
+      <button id="run-birthcitizen">Birth & Citizenship</button><br/>
+      <button id="run-eligibility">Eligibility</button><br/>
+
       <hr/>
       <button id="clear-log">Clear Log</button><hr/>
       <textarea id="logArea" rows="10" style="width:100%;"></textarea>
@@ -95,6 +102,13 @@ const { populateLegalName } = require("./populateLegalName"); // ✅ new import
     await populateLegalName(page, log);
   });
 
+  await page.exposeFunction("runPopulateBirthAndCitizenship", async () => {
+    await populateBirthAndCitizenship(page, log);
+  });
+  await page.exposeFunction("runPopulateEligibility", async () => {
+    await populateEligibility(page, log);
+  });
+
   // Hook browser-side buttons to exposed functions
   await page.evaluate(() => {
     document.getElementById("run-000")?.addEventListener("click", () => {
@@ -108,14 +122,24 @@ const { populateLegalName } = require("./populateLegalName"); // ✅ new import
     document.getElementById("run-location")?.addEventListener("click", () => {
       window.runPopulateLocation();
     });
-
     document.getElementById("run-legalname")?.addEventListener("click", () => {
       window.runPopulateLegalName();
     });
+    document
+      .getElementById("run-birthcitizen")
+      ?.addEventListener("click", () => {
+        window.runPopulateBirthAndCitizenship();
+      });
 
     document.getElementById("clear-log")?.addEventListener("click", () => {
       const logArea = document.getElementById("logArea");
       if (logArea) logArea.value = "";
     });
+
+    document
+      .getElementById("run-eligibility")
+      ?.addEventListener("click", () => {
+        window.runPopulateEligibility();
+      });
   });
 })();

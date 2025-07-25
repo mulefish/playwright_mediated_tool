@@ -1,11 +1,12 @@
 // populateSignup.js
 const {
   randomFromArray,
-  getRandom10Letters,
   firstNamesArray,
   middleNamesArray,
-  radio_click,
+  lastNamesArray,
+  radioClick,
   qSelect,
+  qCheckCheckbox
 } = require("./function_library");
 
 async function populateSignup(page, log, phoneOverride = null) {
@@ -16,7 +17,7 @@ async function populateSignup(page, log, phoneOverride = null) {
 
     const fn = randomFromArray(firstNamesArray);
     const mn = randomFromArray(middleNamesArray);
-    const ln = getRandom10Letters();
+    const ln = randomFromArray(lastNamesArray);
 
     const inputs = await page.$$("input");
     const names = [fn, mn, ln];
@@ -26,32 +27,22 @@ async function populateSignup(page, log, phoneOverride = null) {
 
     const email = `${fn}.${ln}@something.com`;
     await page.fill('input[data-test-id="email-input"]', email);
-    radio_click(
-      page,
-      'div[data-test-id="contact-preference"] div[role="radio"]'
-    );
     await qSelect(page, '10', 'Month', log, 'input[role="combobox"][aria-label="Month"]');
     await qSelect(page, '10', 'Day', log, 'input[role="combobox"][aria-label="Day"]');
     await qSelect(page, '2011', 'Year', log, 'input[role="combobox"][aria-label="Year"]');
     const x = `div[data-testid="countries-dropdown-select"] input[role="combobox"]`
     await qSelect(page, 'United States of America', 'Country', log, x);
-    // const y = `'#name-entry-suffix-q-select input[role="combobox"]');`
-    // await selectOption('Jr', 'Suffix', y); // No longer on the page? 
+    await qCheckCheckbox(page, log, 'div.q-checkbox__bg.absolute');
 
-    const cb = await page.$("div.q-checkbox__bg.absolute");
-    if (cb) {
-      const wrapper = await cb.evaluateHandle((el) =>
-        el.closest(".q-checkbox")
-      );
-      const classList = await wrapper.evaluate((el) => [...el.classList]);
-      if (!classList.includes("q-checkbox--truthy")) {
-        await cb.click();
-      } else {
-        await log("Checkbox already checked");
-      }
-    } else {
-      await log("Checkbox not found");
-    }
+    // THis is on which page? 
+    const y = 'div#name-entry-suffix-q-select input[role="combobox"]'
+    await qSelect(page, 'II', 'suffix', log, y);
+
+    const z = 'div[data-test-id="contact-preference"] div[role="radio"]'
+    radioClick(page,log, z);
+
+    // Intentionally NOT clicking the Next button 
+
   } catch (err) {
     await log("Error: " + err.message);
   }

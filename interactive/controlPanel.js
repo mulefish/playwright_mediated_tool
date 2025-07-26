@@ -16,7 +16,7 @@ module.exports.injectControlPanel = async function (page) {
         <button id="run-photo">PhotoId</button><br/>
         <hr/>
         <button id="clear-log">Clear Log</button><hr/>
-        <textarea id="logArea" rows="10" style="width:100%;"></textarea>
+        <textarea id="logArea" rows="3" style="width:100%;"></textarea>
       `;
       Object.assign(panel.style, {
         position: "fixed",

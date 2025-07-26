@@ -106,6 +106,9 @@ async function qCheckCheckbox(page, log, selector) {
   }
 }
 
+
+
+
 module.exports = {
   randomFromArray,
   firstNamesArray,

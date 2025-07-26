@@ -5,15 +5,16 @@ module.exports.injectControlPanel = async function (page) {
       const panel = document.createElement("div");
       panel.innerHTML = `
         <div id="dragHandle" style="cursor: move; background: #eee; padding: 5px; font-weight: bold;">[ Drag me ]</div>
-        <button id="run-000">Phone: 0000000000</button><br/>
-        <button id="run-111">Phone: 1111111111</button><br/>
-        <button id="run-location">Pick First Location</button><br/>
-        <button id="run-legalname">Next from Legal Name</button><br/>
+        <button id="run-000">Phone: 000</button><br/>
+        <button id="run-111">Phone: 111</button><br/>
+        <button id="run-location">Location</button><br/>
+        <button id="run-legalname">Legal Name</button><br/>
         <button id="run-birthcitizen">Birth & Citizenship</button><br/>
         <button id="run-eligibility">Eligibility</button><br/>
         <button id="run-attributes">Attributes</button><br/>
         <button id="run-address">Address</button><br/>
         <button id="run-photo">PhotoId</button><br/>
+        <button id="run-payment">Payment</button><br/>
         <hr/>
         <button id="clear-log">Clear Log</button><hr/>
         <textarea id="logArea" rows="3" style="width:100%;"></textarea>

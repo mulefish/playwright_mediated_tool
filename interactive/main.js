@@ -8,6 +8,7 @@ const { populateEligibility } = require("./populateEligibility");
 const { populateAttributes } = require("./populateAttributes");
 const { populateAddress } = require("./populateAddress");
 const { populatePhotoId } = require("./populatePhotoId");
+const { populatePayment } = require("./populatePayment");
 const { injectControlPanel } = require("./controlPanel");
 
 async function runAutomation(url) {
@@ -70,6 +71,7 @@ async function runAutomation(url) {
   await page.exposeFunction("runPopulateAttributes", () => populateAttributes(page, log));
   await page.exposeFunction("runPopulateAddress", () => populateAddress(page, log));
   await page.exposeFunction("runPopulatePhotoId", () => populatePhotoId(page, log));
+  await page.exposeFunction("runPopulatePayment", () => populatePayment(page, log));
 
   await page.evaluate(() => {
     const bind = (id, fn) => {
@@ -85,6 +87,7 @@ async function runAutomation(url) {
     bind("run-attributes", () => window.runPopulateAttributes());
     bind("run-address", () => window.runPopulateAddress());
     bind("run-photo", () => window.runPopulatePhotoId());
+    bind("run-payment", () => window.runPopulatePayment());
     bind("clear-log", () => {
       const logArea = document.getElementById("logArea");
       if (logArea) logArea.value = "";

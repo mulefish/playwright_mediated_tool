@@ -89,7 +89,6 @@ async function qSelect(page, value, label, log, selector = null) {
 }
 // WHy so defensive? Defeat Quasar.
 async function qCheckCheckbox(page, log, selector) {
-  log("this is qCheckCheckbox")
   const cb = await page.$(selector);
   if (!cb) {
     await log(`qCheckCheckbox: Not found → ${selector}`);
@@ -107,6 +106,16 @@ async function qCheckCheckbox(page, log, selector) {
 }
 
 
+async function inputField(page, log, selector, whatToWrite) {
+  const field = await page.$(selector);
+  if (field) {
+    await field.fill(whatToWrite);
+  } else {
+    await log("Input field not found " + selector);
+  }
+}
+
+
 
 
 module.exports = {
@@ -117,4 +126,5 @@ module.exports = {
   radioClick,
   qSelect,
   qCheckCheckbox,
+  inputField
 };

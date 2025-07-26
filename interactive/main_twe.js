@@ -7,6 +7,8 @@ const { populateEligibility } = require("./populateEligibility");
 const { populateAttributes } = require("./populateAttributes");
 const { populateAddress } = require("./populateAddress");
 const { populatePhotoId } = require("./populatePhotoId");
+const { injectControlPanel } = require("./controlPanel");
+
 
 (async () => {
   const browser = await chromium.launch({
@@ -19,40 +21,9 @@ const { populatePhotoId } = require("./populatePhotoId");
 
   await page.goto("http://localhost:4200/app/");
   await page.waitForLoadState("networkidle");
+  // The buttons
+  await injectControlPanel(page);
 
-  // Inject UI panel
-  await page.evaluate(() => {
-    const panel = document.createElement("div");
-    panel.innerHTML = `
-      <button id="run-000">Phone: 0000000000</button><br/>
-      <button id="run-111">Phone: 1111111111</button><br/>
-      <button id="run-location">Pick First Location</button><br/>
-      <button id="run-legalname">Next from Legal Name</button><br/>
-      <button id="run-birthcitizen">Birth & Citizenship</button><br/>
-      <button id="run-eligibility">Eligibility</button><br/>
-      <button id="run-attributes">Attributes</button><br/>
-      <button id="run-address">Address</button><br/>
-      <button id="run-photo">PhotoId</button><br/>
-
-
-      
-      <hr/>
-      <button id="clear-log">Clear Log</button><hr/>
-      <textarea id="logArea" rows="10" style="width:100%;"></textarea>
-    `;
-    Object.assign(panel.style, {
-      position: "fixed",
-      top: "10px",
-      right: "100px",
-      background: "white",
-      border: "1px solid black",
-      padding: "10px",
-      zIndex: 9999,
-    });
-    document.body.appendChild(panel);
-  });
-
-  // Logging helpers
   const log = async (msg) => {
     await page.evaluate((msg) => {
       const logArea = document.getElementById("logArea");

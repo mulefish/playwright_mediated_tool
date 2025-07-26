@@ -1,6 +1,7 @@
-# playwright_mediated_tool
+# playwright_mediated_tool repo
+https://github.com/mulefish/playwright_mediated_tool
 
-# WHat is a 'mediated tool'?
+# WHat is a 'computer mediated tool'?
 Use Playwright to move the web quickly into a reasonible state but allow the end user to also interact with the WebApp. 
 
 # Security
@@ -12,8 +13,10 @@ cd mobile
 node device_zoo.js 
 
 # interactive 
-cd interactive 
-node main.js 
+cd interactive   
+node main_twe.js < launch 4200 twe >   
+OR  
+node main_backend.js < launch 4202 backend >   
 
 # screenshot
 ![Screenshot](screenshot.png)

@@ -72,7 +72,6 @@ const { injectControlPanel } = require("./controlPanel");
   await page.exposeFunction("runPopulateAddress", () => populateAddress(page, log));
   await page.exposeFunction("runPopulatePhotoId", () => populatePhotoId(page, log));
 
-  //
   // Bind buttons to exposed functions
   await page.evaluate(() => {
     const bind = (id, fn) => {

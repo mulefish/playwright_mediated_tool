@@ -3,16 +3,35 @@
 function randomFromArray(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
-
+// TODO: Names MIGHT collide - maybe just a UUID would be safer 
 const firstNamesArray = [
-  "Able",
-  "Barbara",
+  "Alpha",
+  "Bravo",
   "Charlie",
-  "Diana",
-  "Erik",
-  "DeClancy",
+  "Delta",
+  "Echo",
+  "Foxtrot",
+  "Golf",
+  "Hotel",
+  "India",
+  "Juliet",
+  "Kilo",
+  "Lima",
+  "Mike",
+  "November",
+  "Oscar",
+  "Papa",
+  "Quebec",
+  "Sierra",
+  "Tango",
+  "Uniform",
+  "Whiskey",
+  "Victor",
+  "XRay",
+  "Yankee",
+  "Zulu"
 ];
-const middleNamesArray = ["A", "B", "C", "D", "E"];
+const middleNamesArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P","Q","R", "S", "T", "U", "V","W", "X", "Y", "Z"];
 const lastNamesArray = [
   "Moon",
   "Ocean",
@@ -24,6 +43,11 @@ const lastNamesArray = [
   "Finch",
   "Wren",
   "Swift",
+  "Shabone", 
+  "Maggy",
+  "Eeboo",
+  "MRC",
+  "Frank"
 ];
 
 // WHy so defensive? Defeat Quasar.

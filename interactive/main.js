@@ -6,7 +6,7 @@ const { populateBirthAndCitizenship } = require("./populateBirthAndCitizenship")
 const { populateEligibility } = require("./populateEligibility");
 const { populateAttributes } = require("./populateAttributes");
 const { populateAddress } = require("./populateAddress");
-
+const { populatePhotoId } = require("./populatePhotoId");
 
 (async () => {
   const browser = await chromium.launch({
@@ -32,6 +32,10 @@ const { populateAddress } = require("./populateAddress");
       <button id="run-eligibility">Eligibility</button><br/>
       <button id="run-attributes">Attributes</button><br/>
       <button id="run-address">Address</button><br/>
+      <button id="run-photo">PhotoId</button><br/>
+
+
+      
       <hr/>
       <button id="clear-log">Clear Log</button><hr/>
       <textarea id="logArea" rows="10" style="width:100%;"></textarea>
@@ -39,7 +43,7 @@ const { populateAddress } = require("./populateAddress");
     Object.assign(panel.style, {
       position: "fixed",
       top: "10px",
-      right: "10px",
+      right: "100px",
       background: "white",
       border: "1px solid black",
       padding: "10px",
@@ -93,6 +97,7 @@ const { populateAddress } = require("./populateAddress");
   await page.exposeFunction("runPopulateEligibility", () => populateEligibility(page, log));
   await page.exposeFunction("runPopulateAttributes", () => populateAttributes(page, log));
   await page.exposeFunction("runPopulateAddress", () => populateAddress(page, log));
+  await page.exposeFunction("runPopulatePhotoId", () => populatePhotoId(page, log));
 
   //
   // Bind buttons to exposed functions
@@ -109,6 +114,8 @@ const { populateAddress } = require("./populateAddress");
     bind("run-eligibility", () => window.runPopulateEligibility());
     bind("run-attributes", () => window.runPopulateAttributes());
     bind("run-address", () => window.runPopulateAddress());
+    
+    bind("run-photo", () => window.runPopulatePhotoId());
     bind("clear-log", () => {
       const logArea = document.getElementById("logArea");
       if (logArea) logArea.value = "";

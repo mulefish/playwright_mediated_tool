@@ -1,10 +1,5 @@
 // populateLegalName.js
 
-/**
- * Clicks the "Next" button from the Legal Name screen.
- * @param {import('playwright').Page} page - The Playwright page object
- * @param {Function} log - Logging function for the UI log area
- */
 async function populateLegalName(page, log) {
     try {
       await page.waitForTimeout(100);

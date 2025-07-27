@@ -128,6 +128,22 @@ async function qCheckCheckbox(page, log, selector) {
   }
 }
 
+async function inputField(page, log, selector, value) {
+  const node = await page.$(selector);
+  if (node) {
+    try {
+      await node.fill(value);
+      await log(`fillInputIfFound: Filled "${value}" into → ${selector}`);
+    } catch (err) {
+      await log(`fillInputIfFound: Error filling input → ${selector} | ${err}`);
+    }
+  } else {
+    await log(`fillInputIfFound: Not found → ${selector}`);
+  }
+}
+
+
+
 module.exports = {
   randomFromArray,
   firstNamesArray,
@@ -136,6 +152,6 @@ module.exports = {
   radioClick,
   qSelect,
   qSelectNthOption,
-  qCheckCheckbox
+  qCheckCheckbox,
+  inputField
 };
-// h3.q-pb-sm:has-text("Terms and Conditions")

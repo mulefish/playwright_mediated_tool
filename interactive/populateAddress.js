@@ -4,7 +4,7 @@ const { qSelect } = require("./function_library");
 async function populateAddress(page, log) {
   try {
     const countrySelector = 'div[data-testid="web-address-entry-country-q-select"] input.q-select__focus-target';
-    await qSelect(page, "United States", "Country", log, countrySelector);
+    await qSelect(page, "United States of America", "Country", log, countrySelector);
 
     const address1Selector = 'input[data-test-id="web-address-entry-address1-q-input"]';
     const addressInput = await page.$(address1Selector);

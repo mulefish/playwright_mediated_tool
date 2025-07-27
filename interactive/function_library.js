@@ -1,5 +1,9 @@
 // function_library.js
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function randomFromArray(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -72,10 +76,7 @@ async function radioClick(page, log, node_selector) {
 }
 
 // WHy so defensive? Defeat Quasar.
-async function qSelect(page, value, label, log, selector = null) {
-  if (!selector) {
-    selector = `label:has-text("${label}") + div input`;
-  }
+async function qSelect(page, value, label, log, selector) {
 
   const input = await page.$(selector);
   if (input) {
@@ -87,6 +88,28 @@ async function qSelect(page, value, label, log, selector = null) {
     await log(`qSelect: Selector not found for label "${label}"`);
   }
 }
+// WHy so defensive? Defeat Quasar.
+async function qSelectNthOption(page, log, selector, nthOption) {
+  try {
+    await sleep(200)
+    const input = await page.$(selector);
+    await input.click();
+    await page.waitForTimeout(50);
+    await sleep(200) // Oh - Quasar. Tsk. 
+    await page.waitForSelector('div[role="listbox"] div[role="option"]', { timeout: 2000 });
+    const options = await page.$$('div[role="listbox"] div[role="option"]');
+
+    if (options.length > nthOption) {
+      await options[nthOption].click();
+      await log(`qSelectNthOption: Selected option index ${nthOption} in ${selector}`);
+    } else {
+      await log(`qSelectNthOption: Index ${nthOption} out of range. Only ${options.length} options.`);
+    }
+  } catch (err) {
+    await log(`qSelectNthOption: Error → ${err}`);
+  }
+}
+
 // WHy so defensive? Defeat Quasar.
 async function qCheckCheckbox(page, log, selector) {
   const cb = await page.$(selector);
@@ -105,19 +128,6 @@ async function qCheckCheckbox(page, log, selector) {
   }
 }
 
-
-async function inputField(page, log, selector, whatToWrite) {
-  const field = await page.$(selector);
-  if (field) {
-    await field.fill(whatToWrite);
-  } else {
-    await log("Input field not found " + selector);
-  }
-}
-
-
-
-
 module.exports = {
   randomFromArray,
   firstNamesArray,
@@ -125,6 +135,7 @@ module.exports = {
   lastNamesArray,
   radioClick,
   qSelect,
-  qCheckCheckbox,
-  inputField
+  qSelectNthOption,
+  qCheckCheckbox
 };
+// h3.q-pb-sm:has-text("Terms and Conditions")

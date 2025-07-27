@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Silly! Not does not write automated tests for tests. Not at this level.\" && exit 1",
+     "twe": "node interactive/main_twe.js",
+     "backend": "node interactive/main_backend.js"
   },
   "author": "",
   "license": "ISC",

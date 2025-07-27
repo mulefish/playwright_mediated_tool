@@ -17,6 +17,11 @@ cd interactive
 node main_twe.js < launch 4200 twe >   
 OR  
 node main_backend.js < launch 4202 backend >   
+OR
+npm run twe < launch 4200 twe > 
+OR
+npm run backend  < launch 4202 backend > 
+
 
 # screenshot
 ![Screenshot](screenshot.png)

@@ -1,6 +1,4 @@
-// 🎣 Fish for API keys (and similar secrets)
-//
-// This script scans source files for hardcoded strings that might be API keys,
+// Fish for API keys: This script scans source files for hardcoded strings that might be API keys,
 // tokens, or credentials accidentally committed to the codebase.
 //
 // It uses a set of modest heuristics to cut down on noise:
@@ -229,6 +227,6 @@ let totalBytesScanned = 0;
 
 walk(path.resolve(startDir));
 
-console.log(`Files scanned: ${totalFilesScanned}`);
+console.log(`\nFiles scanned: ${totalFilesScanned}`);
 console.log(`Total bytes read: ${totalBytesScanned} bytes`);
-console.log(`\nFishing scan finished!`);
+console.log(`Fishing scan finished!`);
